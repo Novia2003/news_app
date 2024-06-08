@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:news_app/Screen/category_news.dart';
 import 'package:news_app/Services/services.dart';
 import 'package:news_app/model/category_data.dart';
 
@@ -63,7 +63,16 @@ class _NewsHomeScreenState extends State<NewsHomeScreen> {
                 itemBuilder: (context, index) {
                   final category = categories[index];
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SelectedCategoryNews(
+                            category: category.categoryName!,
+                          ),
+                        ),
+                      );
+                    },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15),
                       child: Container(

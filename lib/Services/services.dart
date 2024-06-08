@@ -31,3 +31,32 @@ class NewsApi {
     }
   }
 }
+
+class CategoryNews {
+  // Новости по конкретной категории
+  List<NewsModel> dataStore = [];
+  Future<void> getNews(String category) async {
+    Uri url = Uri.parse(
+        "https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey=2092820278f44ba899471595587d3aa1");
+    var response = await http.get(url);
+    var jsonData = jsonDecode(response.body);
+
+    if (jsonData["status"] == 'ok') {
+      jsonData["articles"].forEach((element) {
+        if (element['urlToImage'] != null &&
+            element['description'] != null &&
+            element['author'] != null &&
+            element['content'] != null) {
+          NewsModel newsModel = NewsModel(
+            title: element['title'],
+            urlToImage: element['urlToImage'],
+            description: element['description'],
+            author: element['author'],
+            content: element['content'],
+          );
+          dataStore.add(newsModel);
+        }
+      });
+    }
+  }
+}
