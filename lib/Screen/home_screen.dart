@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/Screen/category_news.dart';
+import 'package:news_app/Screen/news_detail.dart';
 import 'package:news_app/Services/services.dart';
 import 'package:news_app/model/category_data.dart';
 
@@ -105,7 +106,15 @@ class _NewsHomeScreenState extends State<NewsHomeScreen> {
               itemBuilder: (context, index) {
                 final article = articles[index];
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            NewsDetail(newsModel: article),
+                      ),
+                    );
+                  },
                   child: Container(
                     margin: const EdgeInsets.all(15),
                     child: Column(

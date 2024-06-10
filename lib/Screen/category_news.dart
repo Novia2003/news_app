@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/Screen/news_detail.dart';
 import 'package:news_app/Services/services.dart';
 
 import '../model/new_model.dart';
@@ -13,13 +14,13 @@ class SelectedCategoryNews extends StatefulWidget {
 
 class _SelectedCategoryNewsState extends State<SelectedCategoryNews> {
   List<NewsModel> articles = [];
-  bool isLoadin = true;
+  bool isLoading = true;
   getNews() async {
     CategoryNews news = CategoryNews();
     await news.getNews(widget.category);
     articles = news.dataStore;
     setState(() {
-      isLoadin = false;
+      isLoading = false;
     });
   }
 
@@ -42,7 +43,7 @@ class _SelectedCategoryNewsState extends State<SelectedCategoryNews> {
           ),
         ),
       ),
-      body: isLoadin
+      body: isLoading
           ? const Center(
         child: CircularProgressIndicator(),
       )
@@ -54,7 +55,14 @@ class _SelectedCategoryNewsState extends State<SelectedCategoryNews> {
           itemBuilder: (context, index) {
             final article = articles[index];
             return GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NewsDetail(newsModel: article),
+                  ),
+                );
+              },
               child: Container(
                 margin: const EdgeInsets.all(15),
                 child: Column(
